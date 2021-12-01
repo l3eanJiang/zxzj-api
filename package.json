@@ -1,0 +1,15 @@
+{
+  "name": "zxzj",
+  "version": "1.0.0",
+  "description": "获取在线之家影视资源",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10"
+  }
+}
