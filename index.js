@@ -41,13 +41,14 @@ async function main (videoType) {
     for (let i = 1; i < listElement.episode + 1; i++) {
       promiseAll.push(
         new Promise(async (resolve, reject) => {
-          const detail = await getDetail(listElement.videoId, i)
-          resolve(detail)
+          const {episode, playUrl, desc} = await getDetail(listElement.videoId, i)
+          listElement.desc = desc
+          resolve({episode, playUrl})
         })
       )
     }
     console.log(`开始获取${listElement.title}播放地址`)
-    listElement.details = await Promise.all(promiseAll)
+    listElement.details = (await Promise.all(promiseAll)).sort((a, b) => a.episode - b.episode)
   }
   output(list)
   console.timeEnd('耗时')
@@ -81,6 +82,7 @@ async function getDetail(videoId, episode) {
   const $ = load$(html)
   const result = {}
   result.desc = $('.data-more').children().last().text().substring(3)
+  result.episode = episode
   result.playUrl = JSON.parse($('.stui-player__video script').html().split('=')[1]).url
   console.log(`第${episode}集成功获取`)
   return result
@@ -98,6 +100,6 @@ function output(data) {
   })
 }
 
-main(4).catch(err => {
+main(2).catch(err => {
   console.log(err)
 })
