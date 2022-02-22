@@ -83,7 +83,7 @@ async function getDetail(videoId, episode) {
   const result = {}
   result.desc = $('.data-more').children().last().text().substring(3)
   result.episode = episode
-  result.playUrl = JSON.parse($('.stui-player__video script').html().split('=')[1]).url
+  result.playUrl = JSON.parse($('.stui-player__video script').html().slice($('.stui-player__video script').html().indexOf('=') + 1)).url
   console.log(`第${episode}集成功获取`)
   return result
 }
@@ -100,6 +100,6 @@ function output(data) {
   })
 }
 
-main(2).catch(err => {
+main(videoTypeName.indexOf('电影')).catch(err => {
   console.log(err)
 })
