@@ -4,8 +4,7 @@ import cheerio from "cheerio"
 import axios from "axios"
 import path from "path"
 
-axios.defaults.baseURL = 'https://www.zxzj.fun'
-const finalData = []
+axios.defaults.baseURL = 'https://www.zxzjtv.com'
 const dirname = path.resolve()
 const videoTypeName = [
   '全部视频',
@@ -50,8 +49,9 @@ async function main (videoType) {
     console.log(`开始获取${listElement.title}播放地址`)
     listElement.details = (await Promise.all(promiseAll)).sort((a, b) => a.episode - b.episode)
   }
-  output(list)
+  // output(list)
   console.timeEnd('耗时')
+  return list
 }
 
 // 列表页
@@ -84,13 +84,14 @@ async function getDetail(videoId, episode) {
   result.desc = $('.data-more').children().last().text().substring(3)
   result.episode = episode
   result.playUrl = JSON.parse($('.stui-player__video script').html().slice($('.stui-player__video script').html().indexOf('=') + 1)).url
+  result.playUrl = result.playUrl.indexOf('http') === -1 ? `https://bbx-video.gtimg.com/${result.playUrl}.f0.mp4` : result.playUrl
   console.log(`第${episode}集成功获取`)
   return result
 }
 
 function output(data) {
   if (!data) {
-    data = finalData
+    data = []
   }
   fs.writeFile(`${dirname}/data.json`, JSON.stringify(data, null, 2), err => {
     if (err) {
@@ -100,6 +101,6 @@ function output(data) {
   })
 }
 
-main(videoTypeName.indexOf('电影')).catch(err => {
+main(videoTypeName.indexOf('全部视频')).catch(err => {
   console.log(err)
 })
