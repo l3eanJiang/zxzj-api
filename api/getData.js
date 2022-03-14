@@ -1,4 +1,6 @@
-import main from "../index";
+import main from "../index.js";
 export default function handler (req, res) {
-  res.json(main(0))
+  res.json({
+    test: true
+  })
 }
