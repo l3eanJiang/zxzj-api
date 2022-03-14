@@ -32,7 +32,7 @@ function load$(html) {
   return cheerio.load(html)
 }
 
-async function main (videoType) {
+export async function main (videoType) {
   console.time('耗时')
   const list = await getList(videoType,1)
   for (const listElement of list) {
