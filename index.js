@@ -101,6 +101,6 @@ function output(data) {
   })
 }
 
-main(videoTypeName.indexOf('全部视频')).catch(err => {
-  console.log(err)
-})
+// main(videoTypeName.indexOf('全部视频')).catch(err => {
+//   console.log(err)
+// })
