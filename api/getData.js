@@ -1,6 +1,5 @@
 import main from "../index.js";
-export default function handler (req, res) {
-  res.json({
-    test: true
-  })
+export default async function handler (req, res) {
+  let list = await main(0)
+  res.json(list)
 }
